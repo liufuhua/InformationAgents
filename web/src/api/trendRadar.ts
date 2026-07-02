@@ -34,6 +34,20 @@ export type TrendRadarResponse = {
   output_path: string;
 };
 
+export async function loadLatestTrendRadar(): Promise<TrendRadarResponse | null> {
+  const response = await fetch("/api/trend-radar/latest");
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    throw new Error(`Latest run failed: ${response.status}`);
+  }
+
+  return response.json();
+}
+
 export async function collectTrendRadar(): Promise<TrendRadarResponse> {
   const response = await fetch("/api/trend-radar/collect", {
     method: "POST",

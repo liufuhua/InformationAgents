@@ -1,5 +1,10 @@
-import { useMemo, useState } from "react";
-import { collectTrendRadar, SourceItem, TrendRadarResponse } from "./api/trendRadar";
+import { useEffect, useMemo, useState } from "react";
+import {
+  collectTrendRadar,
+  loadLatestTrendRadar,
+  SourceItem,
+  TrendRadarResponse,
+} from "./api/trendRadar";
 import { DetailDrawer } from "./components/DetailDrawer";
 import { ResultTable } from "./components/ResultTable";
 import { RunSummary } from "./components/RunSummary";
@@ -18,6 +23,30 @@ export default function App() {
     if (activeSource === "All") return items;
     return items.filter((item) => item.source === activeSource);
   }, [activeSource, items]);
+
+  useEffect(() => {
+    let isCurrent = true;
+
+    async function loadLatestRun() {
+      try {
+        const result = await loadLatestTrendRadar();
+        if (isCurrent && result) {
+          setResponse(result);
+          setStatus("complete");
+        }
+      } catch {
+        if (isCurrent) {
+          setStatus("error");
+        }
+      }
+    }
+
+    loadLatestRun();
+
+    return () => {
+      isCurrent = false;
+    };
+  }, []);
 
   async function handleCollect() {
     setStatus("collecting");

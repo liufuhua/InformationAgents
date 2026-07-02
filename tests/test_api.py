@@ -44,3 +44,36 @@ def test_collect_endpoint_triggers_one_run_and_returns_artifact(monkeypatch, tmp
     assert calls["count"] == 1
     assert payload["run"]["run_id"] == "2026-07-02-trend-radar"
     assert payload["output_path"] == str(Path(tmp_path) / "2026-07-02-trend-radar.json")
+
+
+def test_latest_endpoint_returns_most_recent_saved_run(tmp_path):
+    older_run = CollectorRun(
+        run_id="2026-07-01-trend-radar",
+        collected_at=datetime(2026, 7, 1, 10, 0, tzinfo=timezone.utc),
+        enabled_sources=["github_search"],
+        items=[],
+        errors=[],
+    )
+    latest_run = CollectorRun(
+        run_id="2026-07-02-trend-radar",
+        collected_at=datetime(2026, 7, 2, 10, 0, tzinfo=timezone.utc),
+        enabled_sources=["github_search", "github_trending"],
+        items=[],
+        errors=[],
+    )
+    older_path = tmp_path / "2026-07-01-trend-radar.json"
+    latest_path = tmp_path / "2026-07-02-trend-radar.json"
+    older_path.write_text(older_run.model_dump_json(), encoding="utf-8")
+    latest_path.write_text(latest_run.model_dump_json(), encoding="utf-8")
+
+    client = TestClient(app)
+
+    response = client.get(
+        "/api/trend-radar/latest",
+        params={"output_dir": str(tmp_path)},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["run"]["run_id"] == "2026-07-02-trend-radar"
+    assert payload["output_path"] == str(latest_path)

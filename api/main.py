@@ -2,11 +2,12 @@ from __future__ import annotations
 
 import os
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 from src.trend_radar.runner import run_trend_radar
 from src.trend_radar.schemas import CollectorConfig, CollectorRun
+from src.trend_radar.storage import load_latest_collector_run
 
 app = FastAPI(title="InformationAgents API")
 
@@ -35,4 +36,14 @@ def collect_trend_radar(request: TrendRadarCollectRequest) -> TrendRadarCollectR
         github_token=os.getenv("GITHUB_TOKEN"),
     )
     run, output_path = run_trend_radar(config)
+    return TrendRadarCollectResponse(run=run, output_path=str(output_path))
+
+
+@app.get("/api/trend-radar/latest", response_model=TrendRadarCollectResponse)
+def get_latest_trend_radar(output_dir: str = "data/runs") -> TrendRadarCollectResponse:
+    latest = load_latest_collector_run(output_dir)
+    if latest is None:
+        raise HTTPException(status_code=404, detail="No trend radar run found")
+
+    run, output_path = latest
     return TrendRadarCollectResponse(run=run, output_path=str(output_path))

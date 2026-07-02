@@ -24,6 +24,7 @@ def test_save_collector_run_writes_json(tmp_path):
 
 
 from src.trend_radar.runner import run_trend_radar
+from src.trend_radar.runner import default_collectors
 from src.trend_radar.schemas import CollectorConfig, SourceEligibility, SourceItem, SourceSignals
 
 
@@ -63,3 +64,14 @@ def test_run_trend_radar_runs_collectors_once_and_saves(tmp_path):
     assert run.run_id == "2026-07-02-trend-radar"
     assert run.item_count == 1
     assert output_path.exists()
+
+
+def test_default_collectors_include_all_documented_mvp_sources():
+    collectors = default_collectors()
+
+    assert "github_search" in collectors
+    assert "github_trending" in collectors
+    assert "hacker_news" in collectors
+    assert "arxiv" in collectors
+    assert "hugging_face" in collectors
+    assert "v2ex" in collectors

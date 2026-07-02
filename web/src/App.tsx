@@ -10,7 +10,14 @@ import { ResultTable } from "./components/ResultTable";
 import { RunSummary } from "./components/RunSummary";
 import { SourceRail } from "./components/SourceRail";
 
-const sources = ["GitHub Search", "GitHub Trending"];
+const sources = [
+  "GitHub Search",
+  "GitHub Trending",
+  "Hacker News",
+  "arXiv",
+  "Hugging Face",
+  "V2EX",
+];
 
 export default function App() {
   const [activeSource, setActiveSource] = useState<string>("All");

@@ -33,7 +33,14 @@ def test_source_item_serializes_required_fields():
 def test_collector_config_defaults_to_single_run_data_path():
     config = CollectorConfig()
 
-    assert config.enabled_sources == ["github_search", "github_trending"]
+    assert config.enabled_sources == [
+        "github_search",
+        "github_trending",
+        "hacker_news",
+        "arxiv",
+        "hugging_face",
+        "v2ex",
+    ]
     assert config.output_dir == "data/runs"
     assert config.limit_per_source == 20
     assert config.fetch_readme is True

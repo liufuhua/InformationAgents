@@ -14,11 +14,14 @@ GitHub 来源会默认抓取仓库 README 原文，并按配置截断后写入
 
 - GitHub Search
 - GitHub Trending
+- Hacker News
+- arXiv
+- Hugging Face
+- V2EX
 
 暂不支持：
 
 - 手动粘贴 URL 后点击收集
-- V2EX 收集
 - 定时采集
 - 连续爬虫
 - 自动发布
@@ -101,12 +104,16 @@ export GITHUB_TOKEN=your_github_token
 .venv/bin/python -m cli.trend_radar collect --source github_search --limit 5
 ```
 
-显式运行两个来源：
+显式运行所有来源：
 
 ```bash
 .venv/bin/python -m cli.trend_radar collect \
   --source github_search \
   --source github_trending \
+  --source hacker_news \
+  --source arxiv \
+  --source hugging_face \
+  --source v2ex \
   --limit 5
 ```
 
@@ -169,7 +176,7 @@ GitHub README 相关信息记录在：
 ```bash
 curl -X POST http://127.0.0.1:8000/api/trend-radar/collect \
   -H "Content-Type: application/json" \
-  -d '{"query":"AI agent","sources":["github_search","github_trending"],"limit":5,"fetch_readme":true,"readme_max_chars":20000}'
+  -d '{"query":"AI agent","sources":["github_search","github_trending","hacker_news","arxiv","hugging_face","v2ex"],"limit":5,"fetch_readme":true,"readme_max_chars":20000}'
 ```
 
 响应会包含结构化 `run` 和保存后的 `output_path`。
@@ -214,7 +221,7 @@ http://127.0.0.1:8000
 当前预期结果：
 
 ```text
-22 passed
+30 passed
 ```
 
 运行前端构建：

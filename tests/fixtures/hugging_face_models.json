@@ -1,0 +1,11 @@
+[
+  {
+    "modelId": "octo/agent-model",
+    "pipeline_tag": "text-generation",
+    "library_name": "transformers",
+    "likes": 77,
+    "downloads": 12345,
+    "lastModified": "2026-07-02T07:00:00.000Z",
+    "createdAt": "2026-07-01T07:00:00.000Z"
+  }
+]

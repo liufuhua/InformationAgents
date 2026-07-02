@@ -54,7 +54,14 @@ export async function collectTrendRadar(): Promise<TrendRadarResponse> {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       query: "AI agent",
-      sources: ["github_search", "github_trending"],
+      sources: [
+        "github_search",
+        "github_trending",
+        "hacker_news",
+        "arxiv",
+        "hugging_face",
+        "v2ex",
+      ],
       limit: 20,
       output_dir: "data/runs",
     }),

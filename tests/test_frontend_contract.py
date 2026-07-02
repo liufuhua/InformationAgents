@@ -13,6 +13,15 @@ def test_frontend_uses_design_tokens_and_one_time_collection_language():
     assert "manual URL" not in app
     assert "loadLatestTrendRadar" in app
     assert "useEffect" in app
+    assert "Hacker News" in app
+    assert "arXiv" in app
+    assert "Hugging Face" in app
+    assert "V2EX" in app
+    api_client = Path("web/src/api/trendRadar.ts").read_text(encoding="utf-8")
+    assert '"hacker_news"' in api_client
+    assert '"arxiv"' in api_client
+    assert '"hugging_face"' in api_client
+    assert '"v2ex"' in api_client
 
 
 def test_frontend_proxies_api_requests_to_backend():

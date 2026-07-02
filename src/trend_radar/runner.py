@@ -5,8 +5,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from src.trend_radar.collectors.arxiv import ArxivCollector
 from src.trend_radar.collectors.github_search import GitHubSearchCollector
 from src.trend_radar.collectors.github_trending import GitHubTrendingCollector
+from src.trend_radar.collectors.hacker_news import HackerNewsCollector
+from src.trend_radar.collectors.hugging_face import HuggingFaceCollector
+from src.trend_radar.collectors.v2ex import V2EXCollector
 from src.trend_radar.dedupe import dedupe_source_items
 from src.trend_radar.schemas import (
     CollectorConfig,
@@ -21,6 +25,10 @@ def default_collectors() -> dict[str, Any]:
     return {
         "github_search": GitHubSearchCollector(),
         "github_trending": GitHubTrendingCollector(),
+        "hacker_news": HackerNewsCollector(),
+        "arxiv": ArxivCollector(),
+        "hugging_face": HuggingFaceCollector(),
+        "v2ex": V2EXCollector(),
     }
 
 

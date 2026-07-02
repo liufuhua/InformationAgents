@@ -50,7 +50,14 @@ class CollectorError(BaseModel):
 
 class CollectorConfig(BaseModel):
     enabled_sources: list[str] = Field(
-        default_factory=lambda: ["github_search", "github_trending"]
+        default_factory=lambda: [
+            "github_search",
+            "github_trending",
+            "hacker_news",
+            "arxiv",
+            "hugging_face",
+            "v2ex",
+        ]
     )
     query: str = "AI agent"
     language: str | None = None

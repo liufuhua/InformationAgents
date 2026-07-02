@@ -8,7 +8,12 @@ import typer
 from src.trend_radar.runner import run_trend_radar
 from src.trend_radar.schemas import CollectorConfig
 
-app = typer.Typer(help="Run AI Trend Radar once.")
+app = typer.Typer(help="AI Trend Radar command line tools.", no_args_is_help=True)
+
+
+@app.callback()
+def main() -> None:
+    """AI Trend Radar command line tools."""
 
 
 @app.command()

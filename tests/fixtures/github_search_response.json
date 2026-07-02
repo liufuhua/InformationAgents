@@ -1,0 +1,17 @@
+{
+  "total_count": 1,
+  "incomplete_results": false,
+  "items": [
+    {
+      "id": 123,
+      "name": "agent-demo",
+      "full_name": "octo/agent-demo",
+      "html_url": "https://github.com/octo/agent-demo",
+      "description": "An AI agent demo project.",
+      "stargazers_count": 1200,
+      "forks_count": 88,
+      "language": "Python",
+      "updated_at": "2026-07-01T12:00:00Z"
+    }
+  ]
+}

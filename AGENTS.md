@@ -1,167 +1,138 @@
 # AGENTS.md
 
-## Project Overview
+## 项目概览
 
-This project is an AI Content Intelligence Platform for AI technology creators.
-It should help collect AI trends, read projects or articles, rank content
-opportunities, generate topic angles, create short-video scripts, draft
-articles, produce storyboards, and plan visual assets.
+本项目是面向 AI 技术内容创作者的 AI 内容情报平台。
 
-The authoritative product plan is `PLAN.md`. When implementation details are
-unclear, follow `PLAN.md` first and ask before expanding scope.
+平台目标是帮助创作者完成从趋势收集到内容生产的完整链路：收集 AI 趋势、阅读项目或文章、评估内容机会、生成选题角度、生成短视频脚本、撰写文章、生成分镜，并规划视觉资产。
 
-## Core Principles
+`PLAN.md` 是权威产品计划。实现细节不清楚时，优先遵循 `PLAN.md`；如果需要扩展范围，必须先询问用户。
 
-1. Each module must be usable independently.
-2. Each module must produce a structured result that can be passed to the next
-   module.
-3. The full workflow is a pipeline of independent modules, not one large
-   monolithic prompt.
-4. Strictly follow the documented product plan and current task instructions.
-   Do not invent new product scope, extra agents, new platforms, or unrelated
-   features unless the user explicitly asks for them.
-5. Keep humans in the review loop. AI output should support creator decisions,
-   not silently publish or claim certainty.
+## 核心原则
 
-## Reference Project
+1. 每个模块都必须可以独立使用。
+2. 每个模块都必须产出结构化结果，并能喂给下一个模块。
+3. 全流程是独立模块组成的流水线，不是一个巨大的单体提示词。
+4. 严格按照已记录的产品计划和当前任务执行。除非用户明确要求，不要发散到新的产品范围、额外 Agent、新平台或无关功能。
+5. 保留人工审核环节。AI 输出用于辅助创作者判断，不应静默发布，也不应伪装成确定事实。
 
-The `example/` directory is a reference project only. It demonstrates a useful
-technical route:
+## 参考项目
 
-- data collection through dedicated dataflow modules
-- role-based agents that analyze shared state
-- graph or pipeline orchestration
-- structured outputs and render helpers
-- CLI and programmatic entry points
-- tests around routing, configuration, schemas, and output behavior
+`example/` 目录只是参考项目。它展示了可借鉴的工程路线：
 
-Do not copy the financial trading domain from `example/` into this project.
-Use it as an engineering reference for a data-driven, multi-agent analysis
-system.
+- 通过独立数据流模块采集数据
+- 基于角色的 Agent 分析共享状态
+- 图或流水线式编排
+- 结构化输出和渲染辅助
+- CLI 和程序化入口
+- 围绕路由、配置、Schema 和输出行为编写测试
 
-## Target Workflow
+不要把 `example/` 的金融交易领域复制到本项目。本项目只把它作为“数据驱动、多 Agent 分析系统”的工程参考。
 
-The intended end-to-end flow is:
+## 目标工作流
+
+预期端到端流程：
 
 ```text
-Information Sources
-  -> Trend Collection
-  -> Project/Article Reading
-  -> Content Opportunity Ranking
-  -> Topic Angle Generation
-  -> Short Video Script Generation
-  -> Article Generation
-  -> Storyboard Generation
-  -> Visual Asset Planning
-  -> Human Review
-  -> Publishing
+信息来源
+  -> 趋势收集
+  -> 项目/文章阅读
+  -> 内容机会排序
+  -> 选题角度生成
+  -> 短视频脚本生成
+  -> 文章生成
+  -> 分镜生成
+  -> 视觉资产规划
+  -> 人工审核
+  -> 发布
 ```
 
-Early development should prioritize the documented MVP:
+早期开发优先服务已记录的 MVP：
 
-- input from GitHub Trending, GitHub search results, or a pasted GitHub URL
-- project reading report
-- content opportunity score
-- three recommended titles
-- three content angles
-- one 90-second Douyin script
-- one storyboard draft
+- 输入来自 GitHub Trending、GitHub 搜索结果，或用户粘贴的 GitHub URL
+- 项目阅读报告
+- 内容机会评分
+- 3 个推荐标题
+- 3 个内容角度
+- 1 条 90 秒抖音脚本
+- 1 份分镜草稿
 
-## Recommended Architecture
+## 推荐架构
 
-Start simple and keep the module boundaries explicit:
+从简单架构开始，并保持模块边界清晰：
 
 ```text
-CLI or Workbench
-  -> API layer
-  -> Agent orchestration layer
-  -> Source collectors
-  -> LLM generation modules
-  -> Storage
+CLI 或工作台
+  -> API 层
+  -> Agent 编排层
+  -> 来源采集器
+  -> LLM 生成模块
+  -> 存储
 ```
 
-Recommended technical route:
+推荐技术路线：
 
-- Python for the backend, collectors, agents, and orchestration.
-- LangGraph or a similar graph/pipeline framework for multi-step workflows.
-- Pydantic or TypedDict schemas for shared content objects and agent outputs.
-- JSON files for prototype storage; PostgreSQL can come later for product use.
-- Isolated adapters for each source such as GitHub, Hacker News, Product Hunt,
-  Hugging Face, arXiv, newsletters, and Chinese content platforms when added.
-- Structured LLM calls where possible, with graceful fallback when a provider
-  cannot return structured output.
+- 后端、采集器、Agent 和编排使用 Python。
+- 多步骤工作流可使用 LangGraph 或类似图/流水线框架。
+- 共享内容对象和 Agent 输出使用 Pydantic 或 TypedDict Schema。
+- 原型阶段使用 JSON 文件存储；产品化后再考虑 PostgreSQL。
+- 每个来源使用独立适配器，例如 GitHub、Hacker News、Product Hunt、Hugging Face、arXiv、newsletter，以及后续中文内容平台。
+- 尽可能使用结构化 LLM 调用；如果模型供应商不支持结构化输出，需要优雅降级。
 
-## Future Directory Guidelines
+## 未来目录规范
 
-The repository is still early. When adding implementation, prefer a structure
-like this:
+仓库仍处于早期。新增实现时，优先采用类似结构：
 
-- `src/collectors/`: source-specific data collection adapters.
-- `src/readers/`: project, article, paper, and product readers.
-- `src/agents/`: role-specific agent prompts, schemas, and execution logic.
-- `src/graph/`: pipeline or graph orchestration.
-- `src/schemas/`: shared content object and module output schemas.
-- `src/storage/`: JSON, database, cache, and report persistence.
-- `src/llm/`: model clients, provider config, retries, and structured output
-  helpers.
-- `cli/`: command-line workflows for manual and semi-automated runs.
-- `tests/`: unit and integration tests.
-- `examples/`: sample input and output artifacts for documented workflows.
+- `src/collectors/`：来源相关的数据采集适配器。
+- `src/readers/`：项目、文章、论文、产品阅读器。
+- `src/agents/`：角色 Agent 的提示词、Schema 和执行逻辑。
+- `src/graph/`：流水线或图编排。
+- `src/schemas/`：共享内容对象和模块输出 Schema。
+- `src/storage/`：JSON、数据库、缓存和报告持久化。
+- `src/llm/`：模型客户端、供应商配置、重试和结构化输出辅助。
+- `cli/`：手动或半自动命令行流程。
+- `tests/`：单元测试和集成测试。
+- `examples/`：已记录工作流的示例输入和输出。
 
-Keep `example/` separate from the main implementation. It is a reference, not a
-package namespace for this product.
+保持 `example/` 与主实现分离。它是参考，不是本产品的包命名空间。
 
-## Module Responsibilities
+## 模块职责
 
 ### AI Trend Radar
 
-Collect AI-related leads from documented sources. Output raw source items with
-source URL, title, raw content or metadata, category, and signal fields.
+从已记录来源收集 AI 相关线索。输出原始来源项，包括来源 URL、标题、原始内容或元数据、分类和信号字段。
 
 ### AI Project Reader
 
-Read a project, article, paper, product page, or news item. Explain what it is,
-who it is for, why it matters, what can be demonstrated visually, and what needs
-fact-checking.
+阅读项目、文章、论文、产品页或新闻项。说明它是什么、面向谁、为什么重要、能展示什么视觉内容，以及哪些信息需要事实核查。
 
 ### Content Opportunity Ranker
 
-Score whether an item is worth turning into content. Use the dimensions from
-`PLAN.md`: novelty, timeliness, visual potential, ease of explanation, audience
-relevance, title potential, business value, technical credibility, discussion
-potential, and platform fit.
+评估某个条目是否值得做成内容。评分维度遵循 `PLAN.md`：新颖性、时效性、视觉潜力、解释难度、受众相关性、标题潜力、商业价值、技术可信度、讨论潜力和平台匹配度。
 
 ### Topic Angle Generator
 
-Generate multiple documented content angles for the same source item. Do not
-invent unsupported claims just to make an angle stronger.
+为同一个来源条目生成多个有证据支撑的内容角度。不要为了强化角度而编造无依据说法。
 
 ### Short Video Script Agent
 
-Generate platform-appropriate scripts, especially the MVP 90-second Douyin
-script. Follow the timing structure in `PLAN.md`.
+生成适合平台的脚本，尤其是 MVP 中的 90 秒抖音脚本。遵循 `PLAN.md` 中的时间结构。
 
 ### Article Writer Agent
 
-Create long-form drafts for WeChat, Zhihu, Xiaohongshu notes, Bilibili articles,
-newsletters, or SEO blogs when requested. Articles should add context and
-reasoning instead of merely expanding the video script.
+在需要时为微信公众号、知乎、小红书笔记、Bilibili 文章、newsletter 或 SEO 博客生成长文草稿。文章应补充上下文和推理，而不是简单扩写视频脚本。
 
 ### Storyboard Agent
 
-Turn an approved script into a shot-by-shot production plan with timing, visual
-content, captions, asset types, and editing notes.
+把已确认的脚本转成逐镜头生产计划，包括时间、画面内容、字幕、资产类型和剪辑说明。
 
 ### Visual Asset Agent
 
-Plan cover images, information cards, comparison charts, diagrams, timelines,
-screenshot annotations, and thumbnail variants. Start with prompts and layout
-directions before adding automatic asset generation.
+规划封面图、信息卡、对比图、流程图、时间线、截图标注和缩略图变体。先从提示词和布局方向开始，再考虑自动生成资产。
 
-## Shared Content Object
+## 共享内容对象
 
-All modules should read and write a shared structured content object. The shape
-should follow `PLAN.md` and include:
+所有模块都应读取和写入同一个共享结构化内容对象。结构遵循 `PLAN.md`，包括：
 
 - `source_item`
 - `research`
@@ -173,90 +144,82 @@ should follow `PLAN.md` and include:
 - `visual_assets`
 - `review_status`
 
-Do not pass important state only through prose. If a downstream module needs a
-field, add it to the schema and cover it with tests.
+重要状态不要只通过自然语言传递。如果下游模块需要某个字段，就把它加入 Schema，并用测试覆盖。
 
-## Data and Evidence Rules
+## 数据与证据规则
 
-Trust is central to this product. Follow these rules:
+可信度是本产品的核心。必须遵守：
 
-- Do not claim an item is trending unless source signals support it.
-- Do not invent star counts, funding, users, benchmarks, company background, or
-  author background.
-- Keep source URLs and collection timestamps with collected items.
-- Distinguish project claims from verified behavior.
-- Use cautious wording such as "may", "appears to", and "based on the README"
-  when evidence is incomplete.
-- Always surface fact-check notes.
-- Flag missing demos, unclear licenses, inactive repositories, setup difficulty,
-  and unverifiable claims.
+- 没有来源信号支撑时，不要声称某个条目正在流行。
+- 不要编造 star 数、融资、用户量、基准测试、公司背景或作者背景。
+- 保留来源 URL 和采集时间。
+- 区分项目自称能力和已验证行为。
+- 证据不完整时使用谨慎措辞，例如“可能”“看起来”“基于 README”。
+- 始终暴露事实核查备注。
+- 标记缺少 Demo、许可证不清晰、仓库不活跃、安装困难和无法验证的说法。
 
-## Agent Guidelines
+## Agent 指南
 
-Agent modules should follow this pattern:
+Agent 模块应遵循以下模式：
 
-1. Read the shared content object or a single documented input.
-2. Build prompt/context from explicit fields, not hidden assumptions.
-3. Use tools or source adapters through public interfaces.
-4. Request structured output when possible.
-5. Validate and normalize the output.
-6. Write only the fields owned by that module.
+1. 读取共享内容对象或单个已记录输入。
+2. 基于明确字段构造提示词和上下文，不使用隐藏假设。
+3. 通过公开接口使用工具或来源适配器。
+4. 尽可能请求结构化输出。
+5. 校验并规范化输出。
+6. 只写入该模块负责的字段。
 
-Avoid agents directly scraping arbitrary sources when a collector or reader
-adapter should own that responsibility.
+避免 Agent 直接抓取任意来源；如果应由采集器或阅读器适配器负责，就不要越界。
 
-## Development Guidelines
+## 开发指南
 
-- Keep changes scoped to the documented module being built.
-- Prefer small, testable modules over large prompt chains.
-- Prefer schemas and render helpers over parsing free-form text.
-- Keep prompts versioned in files when they become stable.
-- Do not silently add new data vendors, platforms, or publishing targets.
-- Do not reformat or refactor unrelated files.
-- Preserve the ability to run one module independently.
-- Preserve the ability to run the full pipeline by passing structured outputs
-  from one module to the next.
+- 变更范围保持在当前已记录模块内。
+- 优先使用小而可测试的模块，不要堆叠大型提示链。
+- 优先使用 Schema 和渲染辅助，不要解析自由文本。
+- 稳定后的提示词应放入文件并版本化。
+- 不要静默增加新的数据供应商、平台或发布目标。
+- 不要格式化或重构无关文件。
+- 保持单个模块可独立运行。
+- 保持完整流水线能通过结构化输出从一个模块传给下一个模块。
 
-## Testing Guidelines
+## 测试指南
 
-Most tests should not require real API calls or live network access. Use stored
-fixtures, mocked source responses, and fake LLM outputs where possible.
+大多数测试不应依赖真实 API 调用或实时网络。优先使用固定 fixture、模拟来源响应和假的 LLM 输出。
 
-When changing collectors, test:
+修改采集器时，测试：
 
-- source response parsing
-- missing or malformed data
-- deduplication behavior
-- timestamps and source metadata
+- 来源响应解析
+- 缺失或畸形数据
+- 去重行为
+- 时间戳和来源元数据
 
-When changing schemas, test:
+修改 Schema 时，测试：
 
-- required fields
-- defaults
-- serialization and deserialization
-- backward-compatible migrations when relevant
+- 必填字段
+- 默认值
+- 序列化和反序列化
+- 必要时的向后兼容迁移
 
-When changing agents, test:
+修改 Agent 时，测试：
 
-- prompt input construction
-- structured output parsing
-- fallback behavior for invalid or partial model output
-- ownership of written fields
+- 提示词输入构造
+- 结构化输出解析
+- 无效或不完整模型输出的降级行为
+- 该模块只写入自己负责的字段
 
-When changing orchestration, test:
+修改编排时，测试：
 
-- module order
-- independent module execution
-- pipeline handoff between modules
-- human-review gates
+- 模块顺序
+- 独立模块执行
+- 模块之间的流水线交接
+- 人工审核关卡
 
-## Common Pitfalls
+## 常见陷阱
 
-- Treating `example/` as the main product instead of a reference.
-- Building a single giant prompt instead of independent modules.
-- Letting downstream modules depend on undocumented prose instead of structured
-  fields.
-- Expanding the product beyond `PLAN.md` without user approval.
-- Generating persuasive content that hides uncertainty.
-- Losing source evidence while transforming content through the pipeline.
-- Adding real API requirements to tests that should run offline.
+- 把 `example/` 当成主产品，而不是参考。
+- 构建一个巨大的单体提示词，而不是独立模块。
+- 让下游模块依赖未记录的自然语言，而不是结构化字段。
+- 未经用户批准就扩展 `PLAN.md` 之外的产品范围。
+- 生成隐藏不确定性的说服型内容。
+- 在流水线转换过程中丢失来源证据。
+- 给本应离线运行的测试增加真实 API 依赖。

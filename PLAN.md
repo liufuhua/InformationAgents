@@ -1,62 +1,62 @@
-# AI Content Intelligence Platform Plan
+# AI 内容情报平台计划
 
-> Goal: Build an AI-assisted content production system that can collect AI trends, read projects, rank opportunities, recommend topics, generate short-video scripts, produce articles, and create storyboards/visual directions. Each stage should work as an independent product and also collaborate as one pipeline.
+> 目标：构建一个 AI 辅助的内容生产系统，可以收集 AI 趋势、阅读项目、评估机会、推荐选题、生成短视频脚本、撰写文章，并生成分镜和视觉方向。每个阶段既能独立使用，也能组合成完整流水线。
 
-## 1. Product Vision
+## 1. 产品愿景
 
-The product should become a content supply-chain platform for AI technology creators.
+本产品应成为 AI 技术内容创作者的内容供应链平台。
 
-Instead of only generating scripts, it should help creators answer the full workflow:
+它不只是生成脚本，而是帮助创作者回答完整工作流里的问题：
 
-- What happened today in AI?
-- Which projects, papers, products, or news are worth covering?
-- Why does this item matter?
-- Which angle is best for short video, article, or deep analysis?
-- What should the creator say?
-- What should appear on screen?
-- What assets should be generated or recorded?
+- 今天 AI 领域发生了什么？
+- 哪些项目、论文、产品或新闻值得报道？
+- 这个条目为什么重要？
+- 它更适合短视频、文章还是深度分析？
+- 创作者应该怎么讲？
+- 屏幕上应该展示什么？
+- 需要生成或录制哪些素材？
 
-The first target user is an AI technology content creator who wants to publish daily Douyin, Xiaohongshu, WeChat, Bilibili, or newsletter content.
+首个目标用户是需要在抖音、小红书、微信公众号、Bilibili 或 newsletter 上持续发布内容的 AI 技术内容创作者。
 
-## 2. Core Principle
+## 2. 核心原则
 
-Each stage is both:
+每个阶段同时具备两种形态：
 
-1. An independent product that can be used alone.
-2. A pipeline node that reads and writes a shared structured content object.
+1. 可以单独使用的独立产品。
+2. 读取并写入共享结构化内容对象的流水线节点。
 
-This keeps the system productizable in multiple ways:
+这样可以支持多种产品化方式：
 
-- A creator can use only the topic selector.
-- A team can use only the project reader.
-- A media workflow can run the full pipeline from data collection to storyboard.
-- A future SaaS product can expose each module as a separate feature.
+- 创作者只使用选题器。
+- 团队只使用项目阅读器。
+- 媒体工作流从数据采集一路跑到分镜。
+- 未来 SaaS 可以把每个模块作为独立功能暴露。
 
-## 3. End-to-End Workflow
+## 3. 端到端工作流
 
 ```text
-Information Sources
-  -> Trend Collection
-  -> Project/Article Reading
-  -> Content Opportunity Ranking
-  -> Topic Angle Generation
-  -> Short Video Script Generation
-  -> Article Generation
-  -> Storyboard Generation
-  -> Visual Asset Planning
-  -> Human Review
-  -> Publishing
+信息来源
+  -> 趋势收集
+  -> 项目/文章阅读
+  -> 内容机会排序
+  -> 选题角度生成
+  -> 短视频脚本生成
+  -> 文章生成
+  -> 分镜生成
+  -> 视觉资产规划
+  -> 人工审核
+  -> 发布
 ```
 
-The recommended early workflow is human-in-the-loop. AI should generate and rank options, while the creator approves facts, angles, scripts, and final outputs.
+早期推荐采用人工在环工作流。AI 负责生成和排序选项，创作者负责确认事实、角度、脚本和最终输出。
 
-## 4. Product Modules
+## 4. 产品模块
 
 ### 4.1 AI Trend Radar
 
-Purpose: Automatically collect AI-related content leads.
+用途：自动收集 AI 相关内容线索。
 
-Sources:
+来源：
 
 - GitHub Trending
 - GitHub Search
@@ -66,15 +66,14 @@ Sources:
 - arXiv
 - Reddit
 - X/Twitter
-- AI newsletters and blogs
-- YouTube channels
-- Chinese platforms such as Zhihu, Jike, WeChat articles, and Xiaohongshu when available
+- AI newsletter 和博客
+- 中文平台，例如知乎、即刻、微信公众号、小红书等，等具备可靠接入条件后再加入
 
-Independent product form:
+独立产品形态：
 
-> Daily AI trend radar that gives creators a ranked list of content leads.
+> 每日 AI 趋势雷达，为创作者提供排序后的内容线索列表。
 
-Core output:
+核心输出：
 
 ```json
 {
@@ -95,26 +94,26 @@ Core output:
 
 ### 4.2 AI Project Reader
 
-Purpose: Read and explain a project, paper, product, or news item.
+用途：阅读并解释一个项目、论文、产品或新闻条目。
 
-It should not only summarize. It should translate technical material into content strategy.
+它不只是摘要器，而是把技术材料翻译成内容策略。
 
-Questions it must answer:
+必须回答的问题：
 
-- What is this?
-- What problem does it solve?
-- Who is it for?
-- What is the strongest demo or visual proof?
-- Why is it trending now?
-- What makes it different from existing tools?
-- What are the risks, limitations, or hype points?
-- Is it suitable for short video, long article, or both?
+- 这是什么？
+- 它解决什么问题？
+- 它面向谁？
+- 最强的 Demo 或视觉证明是什么？
+- 它为什么现在值得关注？
+- 它和现有工具有什么不同？
+- 风险、限制或炒作点是什么？
+- 它适合短视频、长文章，还是两者都适合？
 
-Independent product form:
+独立产品形态：
 
-> Paste a GitHub link or article link and get a creator-friendly analysis report.
+> 粘贴 GitHub 链接或文章链接，得到面向创作者的分析报告。
 
-Core output:
+核心输出：
 
 ```json
 {
@@ -130,26 +129,26 @@ Core output:
 
 ### 4.3 Content Opportunity Ranker
 
-Purpose: Decide which items are worth turning into content.
+用途：判断某个条目是否值得做成内容。
 
-Scoring dimensions:
+评分维度：
 
-- Novelty
-- Timeliness
-- Visual demonstration potential
-- Ease of explanation
-- Audience relevance
-- Title potential
-- Business value
-- Technical credibility
-- Controversy or discussion potential
-- Platform fit
+- 新颖性
+- 时效性
+- 视觉展示潜力
+- 解释难度
+- 受众相关性
+- 标题潜力
+- 商业价值
+- 技术可信度
+- 争议或讨论潜力
+- 平台匹配度
 
-Independent product form:
+独立产品形态：
 
-> Content opportunity scoring assistant for AI creators.
+> 面向 AI 创作者的内容机会评分助手。
 
-Recommended scoring:
+推荐评分输出：
 
 ```json
 {
@@ -163,23 +162,23 @@ Recommended scoring:
 
 ### 4.4 Topic Angle Generator
 
-Purpose: Generate multiple content angles for the same item.
+用途：为同一个条目生成多个内容角度。
 
-Example angles:
+示例角度：
 
-- Technical angle
-- Founder/startup angle
-- Creator productivity angle
-- Ordinary user angle
-- Controversy angle
-- Investment/trend angle
-- Comparison angle
+- 技术角度
+- 创始人/创业角度
+- 创作者提效角度
+- 普通用户角度
+- 争议角度
+- 投资/趋势角度
+- 对比角度
 
-Independent product form:
+独立产品形态：
 
-> AI topic angle and hook generator.
+> AI 选题角度和开头钩子生成器。
 
-Core output:
+核心输出：
 
 ```json
 {
@@ -196,34 +195,34 @@ Core output:
 
 ### 4.5 Short Video Script Agent
 
-Purpose: Generate scripts for Douyin, Xiaohongshu, Bilibili, video account, or YouTube Shorts.
+用途：生成适合抖音、小红书、Bilibili、视频号或 YouTube Shorts 的脚本。
 
-Supported formats:
+支持格式：
 
-- 30-second quick news
-- 60-second trend brief
-- 90-second project explanation
-- 3-minute deep dive
-- Screen-recording commentary
-- Talking-head script
-- Digital human narration
+- 30 秒快讯
+- 60 秒趋势简报
+- 90 秒项目解释
+- 3 分钟深度讲解
+- 屏幕录制解说
+- 真人口播脚本
+- 数字人旁白
 
-Independent product form:
+独立产品形态：
 
-> AI technology short-video script writer.
+> AI 技术短视频脚本写作器。
 
-Standard script structure:
+标准脚本结构：
 
 ```text
-0-3 seconds: Hook
-3-15 seconds: What it is
-15-45 seconds: Three key points
-45-70 seconds: Use cases and opportunity
-70-85 seconds: Limitations and fact-check reminder
-85-90 seconds: Closing and follow prompt
+0-3 秒：钩子
+3-15 秒：它是什么
+15-45 秒：三个关键点
+45-70 秒：使用场景和机会
+70-85 秒：限制和事实核查提醒
+85-90 秒：结尾和关注提示
 ```
 
-Core output:
+核心输出：
 
 ```json
 {
@@ -238,61 +237,61 @@ Core output:
 
 ### 4.6 Article Writer Agent
 
-Purpose: Convert the selected item into a long-form article.
+用途：把选定条目转换成长文。
 
-Target platforms:
+目标平台：
 
-- WeChat official account
-- Zhihu
-- Xiaohongshu notes
-- Bilibili articles
+- 微信公众号
+- 知乎
+- 小红书笔记
+- Bilibili 文章
 - Newsletter
-- SEO blog
+- SEO 博客
 
-Independent product form:
+独立产品形态：
 
-> AI technology article writer and editor.
+> AI 技术文章写作和编辑器。
 
-Article structure:
+文章结构：
 
 ```text
-Title
-Summary
-Background
-What the project/product does
-Core features
-Use cases
-Technical highlights
-Comparison with alternatives
-Business or creator opportunities
-Risks and limitations
-Conclusion
+标题
+摘要
+背景
+项目/产品做什么
+核心功能
+使用场景
+技术亮点
+与替代方案对比
+商业或创作者机会
+风险和限制
+结论
 ```
 
-The article should not be a simple expansion of the video script. It should include more context, careful reasoning, and explicit fact-check notes.
+文章不能只是视频脚本的扩写。它应包含更多上下文、谨慎推理和明确事实核查备注。
 
 ### 4.7 Storyboard Agent
 
-Purpose: Turn a script into an executable video production plan.
+用途：把脚本转换成可执行的视频生产计划。
 
-It should describe:
+需要描述：
 
-- Shot timing
-- Visual content
-- On-screen text
-- Required screen recording
-- Required demo recording
-- Generated graphics
-- B-roll suggestions
-- Transitions
-- Sound effects
-- Cover image direction
+- 镜头时间
+- 画面内容
+- 屏幕文字
+- 需要的屏幕录制
+- 需要的 Demo 录制
+- 生成图形
+- B-roll 建议
+- 转场
+- 音效
+- 封面图方向
 
-Independent product form:
+独立产品形态：
 
-> AI storyboard director for technology short videos.
+> AI 技术短视频分镜导演。
 
-Core output:
+核心输出：
 
 ```json
 {
@@ -310,29 +309,29 @@ Core output:
 
 ### 4.8 Visual Asset Agent
 
-Purpose: Generate or specify visual materials for the video and article.
+用途：为视频和文章生成或指定视觉素材。
 
-Asset types:
+素材类型：
 
-- Cover image
-- Vertical information card
-- Comparison chart
-- Workflow diagram
-- Concept illustration
-- Architecture diagram
-- Timeline image
-- Screenshot annotation
-- Thumbnail text variants
+- 封面图
+- 竖版信息卡
+- 对比图
+- 流程图
+- 概念插图
+- 架构图
+- 时间线图
+- 截图标注
+- 缩略图文字变体
 
-Independent product form:
+独立产品形态：
 
-> AI visual planner for tech content.
+> 面向技术内容的 AI 视觉规划器。
 
-The module should first generate prompts and layout directions. Direct automatic image/video generation can come later.
+该模块应先生成提示词和布局方向。直接自动生成图片或视频可以后续再做。
 
-## 5. Shared Content Data Model
+## 5. 共享内容数据模型
 
-All modules should collaborate through a shared content object.
+所有模块都应通过共享内容对象协作。
 
 ```json
 {
@@ -373,273 +372,273 @@ All modules should collaborate through a shared content object.
 }
 ```
 
-This object can live first as JSON files or database rows. The important rule is that every module reads from it and writes back to it.
+这个对象早期可以存在 JSON 文件或数据库行中。重要规则是：每个模块都读取它，并把自己的结果写回它。
 
-## 6. Collaboration Modes
+## 6. 协作模式
 
-### 6.1 Single-Module Mode
+### 6.1 单模块模式
 
-User directly uses one module.
+用户直接使用某一个模块。
 
-Examples:
+示例：
 
-- Paste a GitHub URL and get a project report.
-- Paste a project report and get a Douyin script.
-- Paste a script and get a storyboard.
+- 粘贴 GitHub URL，得到项目报告。
+- 粘贴项目报告，得到抖音脚本。
+- 粘贴脚本，得到分镜。
 
-### 6.2 Pipeline Mode
+### 6.2 流水线模式
 
-The system runs all modules in sequence.
+系统按顺序运行所有模块。
 
-Example:
-
-```text
-Collect 100 AI items today
-  -> Read top 30
-  -> Rank top 10
-  -> Generate angles for top 5
-  -> Generate scripts for top 3
-  -> Generate storyboard for selected 1
-```
-
-### 6.3 Human Review Mode
-
-Each stage requires approval before moving to the next stage.
-
-Recommended early production workflow:
+示例：
 
 ```text
-AI collects
-  -> Human picks sources to read
-  -> AI reads
-  -> Human confirms facts
-  -> AI ranks and suggests angles
-  -> Human selects angle
-  -> AI writes script and article
-  -> Human edits
-  -> AI creates storyboard and asset plan
+今天收集 100 个 AI 条目
+  -> 阅读前 30 个
+  -> 排名前 10 个
+  -> 为前 5 个生成角度
+  -> 为前 3 个生成脚本
+  -> 为选中的 1 个生成分镜
 ```
 
-This mode is best for quality and trust.
+### 6.3 人工审核模式
 
-## 7. MVP Scope
+每个阶段在进入下一阶段前都需要用户确认。
 
-The first version should avoid full auto-video generation. The fastest useful MVP is:
-
-Input:
-
-- GitHub Trending list, GitHub search results, or a pasted GitHub URL.
-
-Output:
-
-- Project reading report
-- Content opportunity score
-- Three recommended titles
-- Three content angles
-- One 90-second Douyin script
-- One storyboard draft
-
-MVP success criteria:
-
-- A creator can produce one AI project short-video script in less than 10 minutes.
-- The system can explain why a project is or is not worth covering.
-- The output includes fact-check notes instead of pretending everything is verified.
-- Each stage can be re-run independently.
-
-## 8. Suggested Roadmap
-
-### Phase 1: Manual Pipeline Prototype
-
-Build the workflow with prompts, JSON files, and manual copy/paste.
-
-Deliverables:
-
-- Prompt templates for each module
-- Shared content JSON schema
-- Example outputs for 3-5 GitHub AI projects
-- Manual review checklist
-
-### Phase 2: Semi-Automated Workbench
-
-Build a small internal app or CLI.
-
-Deliverables:
-
-- Add URL or GitHub repo input
-- Fetch README/article text
-- Generate project report
-- Generate ranking
-- Generate script and storyboard
-- Save each content item
-
-### Phase 3: Daily Trend Radar
-
-Automate collection.
-
-Deliverables:
-
-- Scheduled source collection
-- Deduplication
-- Category tagging
-- Hotness scoring
-- Daily digest
-
-### Phase 4: Creator Workspace
-
-Turn it into a product workflow.
-
-Deliverables:
-
-- Content item dashboard
-- Review states
-- Script editor
-- Article editor
-- Storyboard view
-- Export to Markdown, JSON, CSV, or document formats
-
-### Phase 5: Visual and Video Integration
-
-Connect the output to production tools.
-
-Deliverables:
-
-- Cover prompt generator
-- Screenshot annotation plan
-- CapCut/Jianying-friendly storyboard export
-- Image-generation prompt export
-- Optional digital human script export
-
-## 9. Recommended Technical Architecture
-
-Start simple:
+推荐早期生产工作流：
 
 ```text
-Frontend or CLI
-  -> API layer
-  -> Agent orchestration layer
-  -> Source collectors
-  -> LLM generation modules
-  -> Storage
+AI 收集
+  -> 人工选择要阅读的来源
+  -> AI 阅读
+  -> 人工确认事实
+  -> AI 排序并建议角度
+  -> 人工选择角度
+  -> AI 写脚本和文章
+  -> 人工编辑
+  -> AI 生成分镜和资产计划
 ```
 
-Suggested components:
+这种模式最利于质量和信任。
 
-- Storage: JSON files for prototype, PostgreSQL for product stage.
-- Queue: simple scheduled jobs first, then Redis/Celery or equivalent if needed.
-- LLM layer: one abstraction for model calls, prompts, structured output, and retries.
-- Source collectors: isolated adapters for GitHub, Hacker News, Product Hunt, arXiv, and other sources.
-- Review workflow: explicit state fields for each content item.
+## 7. MVP 范围
 
-## 10. Initial Prompt Assets
+第一版应避免完整自动视频生成。最快可用的 MVP 是：
 
-### 10.1 Project Reading Prompt
+输入：
+
+- GitHub Trending 列表、GitHub 搜索结果，或用户粘贴的 GitHub URL。
+
+输出：
+
+- 项目阅读报告
+- 内容机会评分
+- 3 个推荐标题
+- 3 个内容角度
+- 1 条 90 秒抖音脚本
+- 1 份分镜草稿
+
+MVP 成功标准：
+
+- 创作者能在 10 分钟内产出一条 AI 项目短视频脚本。
+- 系统能解释某个项目为什么值得或不值得报道。
+- 输出包含事实核查备注，而不是假装全部已验证。
+- 每个阶段都可以独立重跑。
+
+## 8. 建议路线图
+
+### 阶段 1：手动流水线原型
+
+使用提示词、JSON 文件和手动复制粘贴搭建工作流。
+
+交付物：
+
+- 每个模块的提示词模板
+- 共享内容 JSON Schema
+- 3-5 个 GitHub AI 项目的示例输出
+- 手动审核清单
+
+### 阶段 2：半自动工作台
+
+构建一个小型内部应用或 CLI。
+
+交付物：
+
+- 添加 URL 或 GitHub 仓库输入
+- 拉取 README 或文章正文
+- 生成项目报告
+- 生成评分
+- 生成脚本和分镜
+- 保存每个内容项
+
+### 阶段 3：每日趋势雷达
+
+自动化收集。
+
+交付物：
+
+- 定时来源收集
+- 去重
+- 分类标签
+- 热度评分
+- 每日摘要
+
+### 阶段 4：创作者工作区
+
+把能力转成产品工作流。
+
+交付物：
+
+- 内容项仪表盘
+- 审核状态
+- 脚本编辑器
+- 文章编辑器
+- 分镜视图
+- 导出 Markdown、JSON、CSV 或文档格式
+
+### 阶段 5：视觉和视频集成
+
+把输出连接到生产工具。
+
+交付物：
+
+- 封面提示词生成器
+- 截图标注计划
+- 适合剪映的分镜导出
+- 图片生成提示词导出
+- 可选数字人脚本导出
+
+## 9. 推荐技术架构
+
+从简单架构开始：
 
 ```text
-You are an AI technology content analyst.
-Read the following project or article material and produce a creator-friendly report.
-
-Return:
-1. One-sentence explanation
-2. Plain-language summary
-3. Target users
-4. Three key highlights
-5. Visual demo potential
-6. Why it is trending
-7. Similar tools or competitors
-8. Risks and limitations
-9. Fact-check notes
-10. Whether this is suitable for short video, long article, or both
+前端或 CLI
+  -> API 层
+  -> Agent 编排层
+  -> 来源采集器
+  -> LLM 生成模块
+  -> 存储
 ```
 
-### 10.2 Ranking Prompt
+建议组件：
+
+- 存储：原型阶段使用 JSON 文件，产品阶段使用 PostgreSQL。
+- 队列：先使用简单定时任务；如果需要，再引入 Redis/Celery 或同类方案。
+- LLM 层：统一封装模型调用、提示词、结构化输出和重试。
+- 来源采集器：为 GitHub、Hacker News、Product Hunt、arXiv 等来源建立独立适配器。
+- 审核工作流：每个内容项显式记录审核状态。
+
+## 10. 初始提示词资产
+
+### 10.1 项目阅读提示词
 
 ```text
-You are an AI content editor.
-Score this item for short-video potential.
+你是 AI 技术内容分析师。
+阅读下面的项目或文章材料，产出面向创作者的报告。
 
-Score from 1 to 10:
-- Novelty
-- Timeliness
-- Visual potential
-- Ease of explanation
-- Audience relevance
-- Title potential
-- Business value
-- Technical credibility
-- Discussion potential
-
-Then give:
-- Overall score
-- Recommendation
-- Best platform
-- Best content format
-- Reason for recommendation
+返回：
+1. 一句话解释
+2. 通俗摘要
+3. 目标用户
+4. 三个关键亮点
+5. 视觉 Demo 潜力
+6. 为什么它正在受到关注
+7. 类似工具或竞品
+8. 风险和限制
+9. 事实核查备注
+10. 它适合短视频、长文章，还是两者都适合
 ```
 
-### 10.3 Short Video Script Prompt
+### 10.2 评分提示词
 
 ```text
-You are a Douyin technology short-video scriptwriter.
-Write a 90-second script based on the selected AI project.
+你是 AI 内容编辑。
+请评估这个条目的短视频潜力。
 
-Structure:
-0-3 seconds: Strong hook
-3-15 seconds: What it is
-15-45 seconds: Three key highlights
-45-70 seconds: Use cases and opportunity
-70-85 seconds: Limitations or fact-check reminder
-85-90 seconds: Closing and follow prompt
+从 1 到 10 评分：
+- 新颖性
+- 时效性
+- 视觉潜力
+- 解释难度
+- 受众相关性
+- 标题潜力
+- 商业价值
+- 技术可信度
+- 讨论潜力
 
-Style:
-- Clear to non-technical users
-- No exaggerated claims
-- Conversational
-- Suitable for spoken delivery
+然后给出：
+- 总分
+- 推荐结论
+- 最适合平台
+- 最适合内容形式
+- 推荐理由
 ```
 
-### 10.4 Storyboard Prompt
+### 10.3 短视频脚本提示词
 
 ```text
-You are a short-video director.
-Turn this script into a storyboard.
+你是抖音科技短视频脚本作者。
+基于选定 AI 项目写一条 90 秒脚本。
 
-For each shot, include:
-- Time range
-- Visual content
-- On-screen caption
-- Asset type
-- Editing note
-- Whether screen recording, demo recording, generated image, or chart is needed
+结构：
+0-3 秒：强钩子
+3-15 秒：它是什么
+15-45 秒：三个关键亮点
+45-70 秒：使用场景和机会
+70-85 秒：限制或事实核查提醒
+85-90 秒：结尾和关注提示
+
+风格：
+- 非技术用户也能听懂
+- 不夸大
+- 口语化
+- 适合口播
 ```
 
-## 11. Quality Control Rules
+### 10.4 分镜提示词
 
-The system must avoid low-trust AI content.
+```text
+你是短视频导演。
+把这段脚本转换成分镜。
 
-Rules:
+每个镜头包含：
+- 时间范围
+- 画面内容
+- 屏幕字幕
+- 素材类型
+- 剪辑备注
+- 是否需要屏幕录制、Demo 录制、生成图或图表
+```
 
-- Do not claim a project is trending unless source signals support it.
-- Do not invent star counts, funding, users, benchmarks, or author background.
-- Keep fact-check notes visible.
-- Prefer "may", "appears to", and "based on the README" when evidence is incomplete.
-- Distinguish between project claims and verified behavior.
-- Always flag missing demos, unclear licenses, inactive repos, and setup difficulty.
+## 11. 质量控制规则
 
-## 12. Productization Strategy
+系统必须避免低可信度 AI 内容。
 
-Best first product:
+规则：
 
-> AI technology creator workbench: from GitHub project link to topic score, short-video script, article draft, and storyboard.
+- 没有来源信号支撑时，不要声称某个项目正在流行。
+- 不要编造 star 数、融资、用户、基准测试或作者背景。
+- 保持事实核查备注可见。
+- 证据不完整时，优先使用“可能”“看起来”“基于 README”等谨慎措辞。
+- 区分项目自称能力和已验证行为。
+- 始终标记缺少 Demo、许可证不清晰、仓库不活跃和安装困难。
 
-Why this is the best first product:
+## 12. 产品化策略
 
-- Clear target user.
-- Strong daily usage scenario.
-- Easy to validate by using it for your own content.
-- Does not require full video automation at the beginning.
-- Each module can later become a standalone paid feature.
+最适合的第一产品：
 
-Potential standalone products:
+> AI 技术创作者工作台：从 GitHub 项目链接到选题评分、短视频脚本、文章草稿和分镜。
+
+为什么它适合作为第一产品：
+
+- 目标用户清晰。
+- 具备强日常使用场景。
+- 可以通过自己的内容生产快速验证。
+- 一开始不需要完整视频自动化。
+- 每个模块后续都可以成为独立付费功能。
+
+潜在独立产品：
 
 - Daily AI Trend Radar
 - GitHub Project Reader
@@ -649,13 +648,12 @@ Potential standalone products:
 - AI Storyboard Director
 - AI Visual Asset Planner
 
-## 13. Next Actions
+## 13. 下一步行动
 
-1. Define the first target platform: Douyin only, or Douyin plus WeChat/Bilibili.
-2. Pick the first source: GitHub Trending is recommended.
-3. Create 5 sample content items manually.
-4. Run the full manual prompt pipeline on those samples.
-5. Compare the generated scripts with publishable human-edited scripts.
-6. Lock the shared JSON schema.
-7. Build the first semi-automated MVP around GitHub project input.
-
+1. 确定首个目标平台：只做抖音，还是抖音加微信公众号/Bilibili。
+2. 确定首个来源：推荐 GitHub Trending。
+3. 手动创建 5 个示例内容项。
+4. 在这些样本上跑完整手动提示词流水线。
+5. 对比生成脚本和可发布的人类编辑脚本。
+6. 锁定共享 JSON Schema。
+7. 围绕 GitHub 项目输入构建第一个半自动 MVP。

@@ -118,13 +118,10 @@ data/runs/
 重要字段：
 
 - `run_id`
-- `started_at`
-- `finished_at`
-- `sources`
+- `collected_at`
+- `enabled_sources`
 - `items`
 - `errors`
-- `item_count`
-- `error_count`
 
 每条采集结果会保留来源证据：
 
@@ -194,7 +191,7 @@ http://127.0.0.1:8000
 当前预期结果：
 
 ```text
-17 passed
+19 passed
 ```
 
 运行前端构建：

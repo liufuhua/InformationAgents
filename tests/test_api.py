@@ -9,10 +9,11 @@ from src.trend_radar.schemas import CollectorRun
 
 
 def test_collect_endpoint_triggers_one_run_and_returns_artifact(monkeypatch, tmp_path):
-    calls = {"count": 0}
+    calls = {"count": 0, "config": None}
 
     def fake_run_trend_radar(config):
         calls["count"] += 1
+        calls["config"] = config
         output_path = tmp_path / "2026-07-02-trend-radar.json"
         output_path.write_text("{}", encoding="utf-8")
         return (
@@ -36,12 +37,16 @@ def test_collect_endpoint_triggers_one_run_and_returns_artifact(monkeypatch, tmp
             "sources": ["github_search", "github_trending"],
             "limit": 20,
             "output_dir": str(tmp_path),
+            "fetch_readme": False,
+            "readme_max_chars": 1234,
         },
     )
 
     assert response.status_code == 200
     payload = response.json()
     assert calls["count"] == 1
+    assert calls["config"].fetch_readme is False
+    assert calls["config"].readme_max_chars == 1234
     assert payload["run"]["run_id"] == "2026-07-02-trend-radar"
     assert payload["output_path"] == str(Path(tmp_path) / "2026-07-02-trend-radar.json")
 

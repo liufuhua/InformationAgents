@@ -21,3 +21,5 @@ def test_cli_collect_help_shows_collection_options():
     assert result.exit_code == 0
     assert "Run AI Trend Radar once" in result.output
     assert "--source" in result.output
+    assert "--fetch-readme" in result.output
+    assert "--readme-max-chars" in result.output

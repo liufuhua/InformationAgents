@@ -19,6 +19,8 @@ class TrendRadarCollectRequest(BaseModel):
     )
     limit: int = 20
     output_dir: str = "data/runs"
+    fetch_readme: bool = True
+    readme_max_chars: int = 20000
 
 
 class TrendRadarCollectResponse(BaseModel):
@@ -34,6 +36,8 @@ def collect_trend_radar(request: TrendRadarCollectRequest) -> TrendRadarCollectR
         limit_per_source=request.limit,
         output_dir=request.output_dir,
         github_token=os.getenv("GITHUB_TOKEN"),
+        fetch_readme=request.fetch_readme,
+        readme_max_chars=request.readme_max_chars,
     )
     run, output_path = run_trend_radar(config)
     return TrendRadarCollectResponse(run=run, output_path=str(output_path))

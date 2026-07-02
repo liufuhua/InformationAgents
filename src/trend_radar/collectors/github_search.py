@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 
 import httpx
 
+from src.trend_radar.collectors.github_readme import GitHubReadmeFetcher
 from src.trend_radar.schemas import (
     CollectorConfig,
     SourceEligibility,
@@ -19,9 +20,11 @@ class GitHubSearchCollector:
     def __init__(
         self,
         client: httpx.Client | None = None,
+        readme_fetcher: GitHubReadmeFetcher | None = None,
         now: Callable[[], datetime] | None = None,
     ) -> None:
         self.client = client or httpx.Client(base_url="https://api.github.com")
+        self.readme_fetcher = readme_fetcher or GitHubReadmeFetcher(client=self.client)
         self.now = now or (lambda: datetime.now(timezone.utc))
 
     def collect(self, config: CollectorConfig) -> list[SourceItem]:
@@ -55,6 +58,21 @@ class GitHubSearchCollector:
                 owner_repo=owner_repo,
                 updated_at=repo.get("updated_at"),
             )
+            raw_content = description
+            if config.fetch_readme:
+                readme = self.readme_fetcher.fetch(owner_repo, config)
+                if readme:
+                    raw_content = readme.content
+                    signals.source_specific.update(
+                        {
+                            "readme_fetched": True,
+                            "readme_truncated": readme.truncated,
+                            "readme_size": readme.size,
+                            "readme_path": readme.path,
+                        }
+                    )
+                else:
+                    signals.source_specific["readme_fetched"] = False
             items.append(
                 SourceItem(
                     id=item_id,
@@ -63,7 +81,7 @@ class GitHubSearchCollector:
                     url=repo["html_url"],
                     collected_at=collected_at,
                     category="AI Project",
-                    raw_content=description,
+                    raw_content=raw_content,
                     signals=signals,
                     eligibility=SourceEligibility(
                         can_read=bool(repo.get("html_url") and owner_repo),

@@ -5,6 +5,9 @@
 模块 1 只做用户主动触发的一次性数据收集，不做爬虫、不做定时任务、
 不做后台持续采集，也不自动发布内容。
 
+GitHub 来源会默认抓取仓库 README 原文，并按配置截断后写入
+`raw_content`。模块 1 只保存 README 文本，不做阅读分析、总结或评分。
+
 ## 当前范围
 
 已支持来源：
@@ -74,6 +77,18 @@ export GITHUB_TOKEN=your_github_token
 .venv/bin/python -m cli.trend_radar collect --limit 5
 ```
 
+关闭 README 抓取：
+
+```bash
+.venv/bin/python -m cli.trend_radar collect --no-fetch-readme --limit 5
+```
+
+调整 README 截断长度：
+
+```bash
+.venv/bin/python -m cli.trend_radar collect --readme-max-chars 12000 --limit 5
+```
+
 指定 GitHub Search 查询词：
 
 ```bash
@@ -133,6 +148,14 @@ data/runs/
 - `signals`
 - `collected_at`
 
+GitHub README 相关信息记录在：
+
+- `raw_content`：README 截断文本；如果抓取失败，则回退为仓库描述。
+- `signals.source_specific.readme_fetched`
+- `signals.source_specific.readme_truncated`
+- `signals.source_specific.readme_size`
+- `signals.source_specific.readme_path`
+
 ## API 真实运行
 
 启动后端 API：
@@ -146,7 +169,7 @@ data/runs/
 ```bash
 curl -X POST http://127.0.0.1:8000/api/trend-radar/collect \
   -H "Content-Type: application/json" \
-  -d '{"query":"AI agent","sources":["github_search","github_trending"],"limit":5}'
+  -d '{"query":"AI agent","sources":["github_search","github_trending"],"limit":5,"fetch_readme":true,"readme_max_chars":20000}'
 ```
 
 响应会包含结构化 `run` 和保存后的 `output_path`。
@@ -191,7 +214,7 @@ http://127.0.0.1:8000
 当前预期结果：
 
 ```text
-19 passed
+22 passed
 ```
 
 运行前端构建：

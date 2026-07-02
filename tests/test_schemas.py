@@ -36,6 +36,8 @@ def test_collector_config_defaults_to_single_run_data_path():
     assert config.enabled_sources == ["github_search", "github_trending"]
     assert config.output_dir == "data/runs"
     assert config.limit_per_source == 20
+    assert config.fetch_readme is True
+    assert config.readme_max_chars == 20000
 
 
 def test_collector_run_counts_items_and_errors():

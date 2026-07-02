@@ -25,6 +25,17 @@ def collect(
     ] = ["github_search", "github_trending"],
     limit: Annotated[int, typer.Option(help="Max items per source.")] = 20,
     output_dir: Annotated[str, typer.Option(help="Directory for run JSON files.")] = "data/runs",
+    fetch_readme: Annotated[
+        bool,
+        typer.Option(
+            "--fetch-readme/--no-fetch-readme",
+            help="Fetch README raw text for GitHub repositories.",
+        ),
+    ] = True,
+    readme_max_chars: Annotated[
+        int,
+        typer.Option(help="Max README characters to keep per repository."),
+    ] = 20000,
 ) -> None:
     """Run AI Trend Radar once and save one JSON artifact."""
 
@@ -34,6 +45,8 @@ def collect(
         limit_per_source=limit,
         output_dir=output_dir,
         github_token=os.getenv("GITHUB_TOKEN"),
+        fetch_readme=fetch_readme,
+        readme_max_chars=readme_max_chars,
     )
     run, output_path = run_trend_radar(config)
     typer.echo(

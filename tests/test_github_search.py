@@ -10,11 +10,15 @@ from src.trend_radar.schemas import CollectorConfig
 
 def test_github_search_normalizes_repository_items():
     fixture = json.loads(Path("tests/fixtures/github_search_response.json").read_text())
+    readme = "# Agent Demo\n\nThis README explains the AI agent demo."
 
     def handler(request: httpx.Request) -> httpx.Response:
-        assert request.url.path == "/search/repositories"
-        assert request.url.params["q"] == "AI agent"
-        return httpx.Response(200, json=fixture)
+        if request.url.path == "/search/repositories":
+            assert request.url.params["q"] == "AI agent"
+            return httpx.Response(200, json=fixture)
+        if request.url.path == "/repos/octo/agent-demo/readme":
+            return httpx.Response(200, content=readme.encode("utf-8"))
+        raise AssertionError(f"Unexpected request: {request.url}")
 
     client = httpx.Client(
         transport=httpx.MockTransport(handler),
@@ -33,11 +37,13 @@ def test_github_search_normalizes_repository_items():
     assert item.title == "octo/agent-demo"
     assert str(item.url) == "https://github.com/octo/agent-demo"
     assert item.source == "GitHub Search"
-    assert item.raw_content == "An AI agent demo project."
+    assert item.raw_content == readme
     assert item.signals.stars == 1200
     assert item.signals.forks == 88
     assert item.signals.language == "Python"
     assert item.signals.owner_repo == "octo/agent-demo"
+    assert item.signals.source_specific["readme_fetched"] is True
+    assert item.signals.source_specific["readme_truncated"] is False
     assert item.eligibility.can_read is True
 
 

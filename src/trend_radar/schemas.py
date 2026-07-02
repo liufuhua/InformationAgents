@@ -60,6 +60,8 @@ class CollectorConfig(BaseModel):
     retry_count: int = 0
     output_dir: str = "data/runs"
     github_token: str | None = None
+    fetch_readme: bool = True
+    readme_max_chars: int = 20000
 
 
 class CollectorRun(BaseModel):

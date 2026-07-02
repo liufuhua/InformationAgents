@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 import httpx
 from bs4 import BeautifulSoup
 
+from src.trend_radar.collectors.github_readme import GitHubReadmeFetcher
 from src.trend_radar.schemas import (
     CollectorConfig,
     SourceEligibility,
@@ -21,9 +22,11 @@ class GitHubTrendingCollector:
     def __init__(
         self,
         client: httpx.Client | None = None,
+        readme_fetcher: GitHubReadmeFetcher | None = None,
         now: Callable[[], datetime] | None = None,
     ) -> None:
         self.client = client or httpx.Client(base_url="https://github.com")
+        self.readme_fetcher = readme_fetcher or GitHubReadmeFetcher()
         self.now = now or (lambda: datetime.now(timezone.utc))
 
     def collect(self, config: CollectorConfig) -> list[SourceItem]:
@@ -61,6 +64,20 @@ class GitHubTrendingCollector:
                 language=language,
                 owner_repo=owner_repo,
             )
+            if config.fetch_readme:
+                readme = self.readme_fetcher.fetch(owner_repo, config)
+                if readme:
+                    raw_content = readme.content
+                    signals.source_specific.update(
+                        {
+                            "readme_fetched": True,
+                            "readme_truncated": readme.truncated,
+                            "readme_size": readme.size,
+                            "readme_path": readme.path,
+                        }
+                    )
+                else:
+                    signals.source_specific["readme_fetched"] = False
             items.append(
                 SourceItem(
                     id="github-trending-" + owner_repo.replace("/", "-").lower(),

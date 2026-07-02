@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -8,16 +9,22 @@ type Props = {
 };
 
 export function DetailDrawer({ item }: Props) {
+  const detailPanelRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    detailPanelRef.current?.scrollTo({ top: 0, behavior: "auto" });
+  }, [item?.id]);
+
   if (!item) {
     return (
-      <aside className="detail-panel">
+      <aside className="detail-panel" ref={detailPanelRef}>
         <p>Select an item to inspect evidence.</p>
       </aside>
     );
   }
 
   return (
-    <aside className="detail-panel">
+    <aside className="detail-panel" ref={detailPanelRef}>
       <h2>{item.title}</h2>
       <section className="markdown-body">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>

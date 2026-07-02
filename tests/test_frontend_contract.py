@@ -53,3 +53,13 @@ def test_detail_panel_is_wider_and_has_markdown_styles():
     assert ".markdown-body" in styles
     assert ".markdown-body pre" in styles
     assert ".markdown-body code" in styles
+
+
+def test_detail_drawer_scrolls_to_top_when_item_changes():
+    detail_drawer = Path("web/src/components/DetailDrawer.tsx").read_text(encoding="utf-8")
+
+    assert "useEffect" in detail_drawer
+    assert "useRef" in detail_drawer
+    assert "detailPanelRef" in detail_drawer
+    assert "scrollTo({ top: 0" in detail_drawer
+    assert "[item?.id]" in detail_drawer

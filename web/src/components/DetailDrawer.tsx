@@ -1,3 +1,6 @@
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
 import { SourceItem } from "../api/trendRadar";
 
 type Props = {
@@ -16,7 +19,11 @@ export function DetailDrawer({ item }: Props) {
   return (
     <aside className="detail-panel">
       <h2>{item.title}</h2>
-      <p>{item.raw_content || "No raw content provided."}</p>
+      <section className="markdown-body">
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {item.raw_content || "No raw content provided."}
+        </ReactMarkdown>
+      </section>
       <p>
         <a href={item.url} target="_blank" rel="noreferrer">
           Source URL

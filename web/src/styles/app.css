@@ -57,7 +57,7 @@ body {
 .workbench {
   display: grid;
   gap: 16px;
-  grid-template-columns: 220px minmax(0, 1fr) 360px;
+  grid-template-columns: 220px minmax(0, 1fr) minmax(500px, 36vw);
   padding-top: 20px;
 }
 
@@ -147,7 +147,94 @@ body {
   background: var(--color-surface-dark);
   border-radius: var(--radius-lg);
   color: var(--color-on-dark);
+  max-height: calc(100vh - 132px);
+  min-width: 0;
+  overflow: auto;
   padding: 16px;
+}
+
+.detail-panel a {
+  color: var(--color-primary);
+}
+
+.markdown-body {
+  color: var(--color-on-dark);
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3 {
+  color: var(--color-on-dark);
+  line-height: 1.25;
+  margin: 20px 0 10px;
+}
+
+.markdown-body h1 {
+  font-size: 24px;
+}
+
+.markdown-body h2 {
+  font-size: 20px;
+}
+
+.markdown-body h3 {
+  font-size: 17px;
+}
+
+.markdown-body p,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body blockquote,
+.markdown-body pre,
+.markdown-body table {
+  margin: 0 0 14px;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 22px;
+}
+
+.markdown-body blockquote {
+  border-left: 3px solid var(--color-primary);
+  color: var(--color-on-dark-soft);
+  padding-left: 12px;
+}
+
+.markdown-body pre {
+  background: var(--color-surface-dark-elevated);
+  border-radius: var(--radius-md);
+  overflow: auto;
+  padding: 12px;
+}
+
+.markdown-body code {
+  background: var(--color-surface-dark-elevated);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 2px 5px;
+}
+
+.markdown-body pre code {
+  background: transparent;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  display: block;
+  overflow: auto;
+  width: 100%;
+}
+
+.markdown-body th,
+.markdown-body td {
+  border: 1px solid var(--color-surface-dark-elevated);
+  padding: 8px;
 }
 
 .json-preview {

@@ -33,3 +33,23 @@ def test_frontend_has_required_workbench_components():
 
     for path in required_paths:
         assert Path(path).exists(), path
+
+
+def test_detail_drawer_renders_markdown_content():
+    detail_drawer = Path("web/src/components/DetailDrawer.tsx").read_text(encoding="utf-8")
+    package_json = Path("web/package.json").read_text(encoding="utf-8")
+
+    assert "react-markdown" in package_json
+    assert "remark-gfm" in package_json
+    assert "ReactMarkdown" in detail_drawer
+    assert "remarkGfm" in detail_drawer
+    assert "markdown-body" in detail_drawer
+
+
+def test_detail_panel_is_wider_and_has_markdown_styles():
+    styles = Path("web/src/styles/app.css").read_text(encoding="utf-8")
+
+    assert "minmax(500px, 36vw)" in styles
+    assert ".markdown-body" in styles
+    assert ".markdown-body pre" in styles
+    assert ".markdown-body code" in styles
